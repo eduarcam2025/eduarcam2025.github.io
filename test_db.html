@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Conexión con Firebase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Prueba Firebase</h2>
+        <form id="test-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="Escribe tu nombre" required>
+            <button type="submit">Enviar a Firebase</button>
+        </form>
+        <div class="message" id="message"></div>
+    </div>
+
+    <!-- Importar Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"></script>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_L0T6JVNncz5OckrLzRKrID8d_caEGGs",
+            authDomain: "insolfegetest.firebaseapp.com",
+            projectId: "insolfegetest",
+            storageBucket: "insolfegetest.firebasestorage.app",
+            messagingSenderId: "625452194037",
+            appId: "G-C2ZKMWNSWH"
+        };
+
+        // Inicializar Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Manejar el envío del formulario
+        document.getElementById('test-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+
+            try {
+                // Guardar datos en Firestore
+                const docRef = await db.collection('pruebas').add({
+                    nombre: nombre,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Mostrar mensaje de éxito
+                document.getElementById('message').textContent = `Datos guardados con ID: ${docRef.id}`;
+                document.getElementById('message').className = 'message success';
+
+                // Limpiar el formulario
+                document.getElementById('test-form').reset();
+            } catch (error) {
+                // Mostrar mensaje de error
+                document.getElementById('message').textContent = `Error: ${error.message}`;
+                document.getElementById('message').className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>
