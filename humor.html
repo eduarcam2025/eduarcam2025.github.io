@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insolfége-Calidad del Sueño</title>
+    <style>
+        :root {
+            --color-dark: #190019;
+            --color-mid: #2b124c;
+            --color-accent: #522858;
+            --color-light: #854F6C;
+            --color-bg: #dfB6B2;
+            --color-cream: #FBE4D8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            background: linear-gradient(135deg, var(--color-bg), var(--color-accent));
+            position: relative;
+            color: var(--color-cream);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 1000px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-radius: 24px;
+        }
+
+        .content-wrapper {
+            flex: 1 1 45%;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .slider-icons-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .slider-track-container {
+            width: 100%;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .slider-track {
+            width: 100%;
+            height: 4px;
+            background-color: #f0f0f0;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .slider-handle {
+            width: 40px;
+            height: 40px;
+            background-color: #FF7A45;
+            border-radius: 50%;
+            position: absolute;
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 10;
+            transform: translateX(-50%);
+            top: 50%;
+            margin-top: -20px;
+        }
+
+        .slider-labels-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .slider-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .option-label {
+            font-size: 16px;
+            color: #2b124c;
+            font-weight: 500;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+
+        .option-hours {
+            font-size: 12px;
+            color: #2b124c;
+            text-transform: uppercase;
+        }
+
+        .slider-icon {
+            font-size: 32px;
+            text-align: center;
+            opacity: 0.5;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .slider-icon.active {
+            opacity: 1;
+        }
+
+        .excellent { color: #4CAF50; }
+        .good { color: #FFC107; }
+        .fair { color: #FF9800; }
+        .poor { color: #F44336; }
+        .worst { color: #9C27B0; }
+
+        .refresh-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .refresh-icon::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-top: 2px solid white;
+            border-right: 2px solid white;
+            transform: rotate(45deg);
+        }
+
+        /* Style for the animated mouse */
+        .animated-mouse {
+            position: absolute;
+            width: 50px;
+            height: 30px;
+            z-index: 100;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out;
+        }
+
+        .animated-mouse img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+
+
+/* Menú de Navegación */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-dark);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: var(--color-bg);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    transition: transform 0.3s;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .menu {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        width: 250px;
+        height: calc(100vh - 60px);
+        background: var(--color-dark);
+        padding: 1rem;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+    }
+
+    .menu.active {
+        transform: translateX(0);
+    }
+
+    .menu ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+    </style>
+</head>
+<body>
+<header class="navbar">
+    <div class="logo">Insolfége</div>
+    <nav class="menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="registro.html">Registro</a></li>
+            <li><a href="humor.html">Estado de Ánimo</a></li>
+            <li><a href="sueno.html">Calidad del Sueño</a></li>
+            <li><a href="inicio.html">Dashboard</a></li>
+            <li><a href="reproductor.html">Sonidos Binaurales</a></li>
+        </ul>
+    </nav>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+
+<!-- Título con el nombre del usuario -->
+<div id="user-title" style="text-align: center; margin-top: 20px; font-size: 24px; color: #333;">
+    <!-- Aquí se mostrará el nombre del usuario -->
+</div>
+
+<div class="container">
+    <h1 class="content-wrapper">¿Cómo calificarías la calidad de tu sueño?</h1>
+    <div class="slider-container">
+        <div class="slider-icons-container">
+            <div class="slider-icon excellent">
+                <img src="img/1joy.png" alt="Excellent">
+            </div>
+            <div class="slider-icon good">
+                <img src="img/2bajo.png" alt="Good">
+            </div>
+            <div class="slider-icon fair">
+                <img src="img/3fair.png" alt="Fair">
+            </div>
+            <div class="slider-icon poor">
+                <img src="img/4fear.png" alt="Poor">
+            </div>
+            <div class="slider-icon worst">
+                <img src="img/5worst.png" alt="Worst">
+            </div>
+        </div>
+        <div class="slider-track-container">
+            <div class="slider-track">
+                <div class="slider-handle">
+                    <div class="refresh-icon"></div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-labels-container">
+            <div class="slider-option">
+                <div class="option-label">Excelente</div>
+                <div class="option-hours">7-9 HORAS</div>
+            </div>
+            <div class="slider-option">
+                <div class="option-label">Buena</div>
+                <div class="option-hours">6-7 HORAS</div>
+            </div>
+            <div class="slider-option">
+                <div class="option-label">Regular</div>
+                <div class="option-hours">5 HORAS</div>
+            </div>
+            <div class="slider-option">
+                <div class="option-label">Mala</div>
+                <div class="option-hours">3-4 HORAS</div>
+            </div>
+            <div class="slider-option">
+                <div class="option-label">Pésima</div>
+                <div class="option-hours">3 HORAS</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add your mouse image here -->
+<div class="animated-mouse">
+    <img src="mouse.png" alt="Mouse">
+</div>
+
+<!-- Importar Firebase -->
+<script type="module">
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {  getFirestore, doc, collection, addDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCyU6h56zzEtuJRr4JbNITCel9Z_K5HYQI",
+        authDomain: "registreruser-42ae0.firebaseapp.com",
+        projectId: "registreruser-42ae0",
+        storageBucket: "registreruser-42ae0.firebasestorage.app",
+        messagingSenderId: "676582374312",
+        appId: "1:676582374312:web:9c3545678ecbc801a2bb9d"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Verificar si el usuario tiene un ID válido
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get('userId') || localStorage.getItem('userId');
+
+    if (!userId) {
+        // Redirigir a login.html si no hay ID de usuario
+        window.location.href = 'login.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const sliderTrack = document.querySelector('.slider-track');
+        const sliderHandle = document.querySelector('.slider-handle');
+        const sliderOptions = document.querySelectorAll('.slider-option');
+        const sliderIcons = document.querySelectorAll('.slider-icon');
+        const animatedMouse = document.querySelector('.animated-mouse');
+
+        // Positions for each option (from left to right: Excellent, Good, Fair, Poor, Worst)
+        const positions = [0, 25, 50, 75, 100];
+        let currentPos = 2; // Start with Fair selected (3rd index)
+
+        // Initial setup
+        loadSavedSelection();
+        updateSlider();
+
+        // Make the handle draggable
+        let isDragging = false;
+        let startX = 0;
+        let startHandlePos = 0;
+        sliderHandle.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', mouseMove);
+        document.addEventListener('mouseup', endDrag);
+
+        function startDrag(e) {
+            isDragging = true;
+            startX = e.clientX;
+            startHandlePos = parseInt(sliderHandle.style.left) || positions[currentPos];
+            e.preventDefault();
+        }
+
+        function mouseMove(e) {
+            // Update the animated mouse position
+            animatedMouse.style.left = e.clientX + 'px';
+            animatedMouse.style.top = e.clientY + 'px';
+            if (!isDragging) return;
+
+            const containerRect = sliderTrack.getBoundingClientRect();
+            const containerWidth = containerRect.width;
+            const mouseMovement = (e.clientX - startX);
+            const newHandlePos = startHandlePos + mouseMovement;
+
+            // Clamp the position to be within 0-100
+            let posPercentage = Math.max(0, Math.min(100, newHandlePos));
+            // Find the closest position
+            let closestIndex = 0;
+            let minDiff = Infinity;
+            for (let i = 0; i < positions.length; i++) {
+                const diff = Math.abs(posPercentage - positions[i]);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closestIndex = i;
+                }
+            }
+            currentPos = closestIndex;
+            updateSlider();
+        }
+
+        function endDrag() {
+            isDragging = false;
+        }
+
+        function updateSlider() {
+            // Update handle position
+            const posX = positions[currentPos];
+            sliderHandle.style.left = `${posX}%`;
+
+            // Update active icon
+            sliderIcons.forEach((icon, index) => {
+                if (index === currentPos) {
+                    icon.classList.add('active');
+                } else {
+                    icon.classList.remove('active');
+                }
+            });
+
+            // Save selection to localStorage and Firebase
+            saveSelection();
+        }
+         async function saveSelectionToFirestore(selectedQuality) {
+        try {
+            const userDocRef = doc(db, "usuarios", userId);
+            const sleepHistoryCollection = collection(userDocRef, "sleepHistory");
+
+            await addDoc(sleepHistoryCollection, {
+                calidadSueno: selectedQuality,
+                timestamp: new Date().toISOString()
+            });
+
+            console.log("Selección guardada en Firebase");
+        } catch (error) {
+            console.error("Error al guardar en Firebase:", error);
+        }
+    }
+
+        function saveSelection() {
+            const sleepQualityOptions = ['Excellent', 'Good', 'Fair', 'Poor', 'Worst'];
+            const selectedQuality = sleepQualityOptions[currentPos];
+
+            // Guardar en localStorage
+            localStorage.setItem(`sleepQuality_${userId}`, selectedQuality);
+
+            // Guardar en Firestore
+            const userDocRef = doc(db, "usuarios", userId);
+            const sleepHistoryCollection = collection(userDocRef, "sleepHistory");
+
+            addDoc(sleepHistoryCollection, {
+                calidadSueno: selectedQuality,
+                timestamp: new Date().toISOString()
+            })
+                .then(() => {
+                    console.log("Selección guardada en Firebase");
+                })
+                .catch((error) => {
+                    console.error("Error al guardar en Firebase:", error);
+                });
+        }
+
+        function loadSavedSelection() {
+            const savedQuality = localStorage.getItem(`sleepQuality_${userId}`);
+            if (savedQuality) {
+                const sleepQualityOptions = ['Excellent', 'Good', 'Fair', 'Poor', 'Worst'];
+                currentPos = sleepQualityOptions.indexOf(savedQuality);
+                if (currentPos === -1) {
+                    currentPos = 2; // Default to Fair if not found
+                }
+            }
+        }
+
+        // Add click functionality to each option
+        sliderOptions.forEach((option, index) => {
+            option.addEventListener('click', () => {
+                currentPos = index;
+                updateSlider();
+            });
+        });
+
+        // Also add click functionality to each icon
+        sliderIcons.forEach((icon, index) => {
+            icon.addEventListener('click', () => {
+                currentPos = index;
+                updateSlider();
+            });
+        });
+    });
+
+</script>
+</body>
+</html>
