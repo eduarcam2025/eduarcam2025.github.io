@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - SleepTrack</title>
-   <style>
+    <title>Insolfége-Regsitro</title>
+    <style>
         :root {
             --color-dark: #190019;
             --color-mid: #2b124c;
@@ -19,13 +19,11 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
-/*             display: flex; */
+            display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, var(--color-bg), var(--color-accent));
@@ -42,57 +40,23 @@
             font-size: 1.2rem;
             color: var(--color-mid);
         }
-
         .auth-container {
-            display:flex;
             max-width: 400px;
-
             margin: 60px auto;
             background-color: white;
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--color-mid);
-        }
-
-        .tab.active {
-            color: var(--color-accent);
-            border-bottom: 2px solid var(--color-accent);
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-        }
-
         .form-group {
             margin-bottom: 20px;
         }
-
         .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
             color: var(--color-dark);
         }
-
         .form-group input,
         .form-group select {
             width: 100%;
@@ -102,81 +66,17 @@
             font-size: 1rem;
             background-color: var(--color-cream);
         }
-
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
             border-color: var(--color-accent);
         }
-
         .error {
-            color: var(--color-dark);
+            color: red;
             font-size: 0.9rem;
             margin-top: 5px;
             display: block;
         }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            font-weight: normal;
-            color: var(--color-dark);
-        }
-
-        .social-login {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .social-login p {
-            margin-bottom: 15px;
-            color: var(--color-dark);
-        }
-
-        .social-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .social-btn {
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .social-btn.google {
-            background-color: white;
-            color: var(--color-dark);
-            border: 1px solid var(--color-light);
-        }
-
-        .social-btn.facebook {
-            background-color: var(--color-mid);
-            color: white;
-        }
-
-        .social-btn i {
-            font-size: 1.2rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
         .btn {
             display: inline-block;
             padding: 12px 24px;
@@ -186,31 +86,14 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .btn-primary {
             background-color: var(--color-accent);
             color: white;
         }
-
         .btn-primary:hover {
             background-color: var(--color-mid);
             transform: translateY(-2px);
         }
-
-        .btn-secondary {
-            background-color: var(--color-cream);
-            color: var(--color-dark);
-            border: 1px solid var(--color-light);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--color-light);
-            transform: translateY(-2px);
-        }
-
-
-
-
         /* Menú de Navegación */
         .navbar {
             position: fixed;
@@ -294,8 +177,8 @@
     </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">SleepTrack</div>
+<header class="navbar">
+        <div class="logo">Insolfége</div>
         <nav class="menu">
             <ul>
                 <li><a href="index.html">Inicio</a></li>
@@ -313,105 +196,89 @@
         </div>
 
     </header>
+    <main>
+    <section class="auth-container">
+     <div class="auth-form active" id="register-form">
+        <h2>Crear Cuenta</h2>
+        <form id="registro-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="ejemplo@email.com">
+                <small class="error" id="email-error"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required placeholder="Mínimo 8 caracteres">
+                <small class="error" id="password-error"></small>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                <small class="error" id="nombre-error"></small>
+            </div>
+            <div class="form-group">
+                <label for="edad">Edad</label>
+                <input type="number" id="edad" name="edad" required placeholder="Tu edad">
+                <small class="error" id="edad-error"></small>
+            </div>
+            <div class="form-group">
+                <label for="genero">Género</label>
+                <select id="genero" name="genero" required>
+                    <option value="" disabled selected>Selecciona tu género</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                    <option value="otro">Otro</option>
+                </select>
+                <small class="error" id="genero-error"></small>
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+        <div id="message"></div>
+    </section>
+    </main>
 
-        <main>
-        <h1>Proyecto Escolar</h1>
-            <p class="subtitle">Regístrate para comenzar a usar nuestra plataforma</p>
-            <section class="auth-container">
+    <!-- Importar Firebase -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCyU6h56zzEtuJRr4JbNITCel9Z_K5HYQI",
+            authDomain: "registreruser-42ae0.firebaseapp.com",
+            projectId: "registreruser-42ae0",
+            storageBucket: "registreruser-42ae0.firebasestorage.app",
+            messagingSenderId: "676582374312",
+            appId: "1:676582374312:web:9c3545678ecbc801a2bb9d"
+        };
 
-                <!-- Formulario de Registro -->
-                <div class="auth-form active" id="register-form">
-                    <h2>Crear Cuenta</h2>
-                    <form id="registro-form">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="ejemplo@email.com">
-                            <small class="error" id="email-error"></small>
-                        </div>
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-                        <div class="form-group">
-                            <label for="password">Contraseña</label>
-                            <input type="password" id="password" name="password" required placeholder="Mínimo 8 caracteres">
-                            <small class="error" id="password-error"></small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="confirm-password">Confirmar Contraseña</label>
-                            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Repite la contraseña">
-                            <small class="error" id="confirm-password-error"></small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
-                            <small class="error" id="nombre-error"></small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edad">Edad</label>
-                            <input type="number" id="edad" name="edad" required placeholder="Tu edad">
-                            <small class="error" id="edad-error"></small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="genero">Género</label>
-                            <select id="genero" name="genero" required>
-                                <option value="" disabled selected>Selecciona tu género</option>
-                                <option value="masculino">Masculino</option>
-                                <option value="femenino">Femenino</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                            <small class="error" id="genero-error"></small>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Registrarse</button>
-                    </form>
-
-
-                </div>
-
-
-            </section>
-        </main>
-
-        </div>
-
-    <script>
-    // Agrega esta función para generar UUID
-function generarUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = (Math.random() * 16) | 0,
-              v = c === 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
-}
-
-// Dentro de tu código de validación existente
-
-document.getElementById('registro-form').addEventListener('submit', function(e) {
+        // Manejar el envío del formulario
+        document.getElementById('registro-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             document.querySelectorAll('.error').forEach(el => el.textContent = '');
-
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
             const nombre = document.getElementById('nombre').value;
             const edad = parseInt(document.getElementById('edad').value);
             const genero = document.getElementById('genero').value;
+
             let isValid = true;
 
-
+            // Validaciones
             if (!email || !email.includes('@')) {
                 document.getElementById('email-error').textContent = 'Email inválido';
                 isValid = false;
             }
             if (password.length < 8) {
                 document.getElementById('password-error').textContent = 'Mínimo 8 caracteres';
-                isValid = false;
-            }
-            if (password !== confirmPassword) {
-                document.getElementById('confirm-password-error').textContent = 'Contraseñas no coinciden';
                 isValid = false;
             }
             if (!nombre) {
@@ -428,30 +295,36 @@ document.getElementById('registro-form').addEventListener('submit', function(e) 
             }
 
             if (isValid) {
+                try {
+                    // Crear usuario en Firebase Authentication
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
 
-                let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-                let contador = parseInt(localStorage.getItem('ultimoId')) || 0;
-                    // Incrementar contador
-                    contador++;
-                    localStorage.setItem('ultimoId', contador.toString());
+                    // Guardar datos adicionales en Firestore
+                    await setDoc(doc(db, "usuarios", user.uid), {
+                        email,
+                        nombre,
+                        edad,
+                        genero,
+                        createdAt: new Date().toISOString()
+                    });
 
-                if (usuarios.some(usuario => usuario.email === email)) {
-                    alert('Email ya registrado');
-                    return;
+                    // Mostrar mensaje de éxito
+                    document.getElementById('message').textContent = 'Usuario registrado correctamente';
+                    document.getElementById('message').style.color = 'green';
+                    window.location.href = 'login.html';
+
+
+                    // Limpiar el formulario
+                    document.getElementById('registro-form').reset();
+                    setTimeout(() => {
+                    window.location.href = 'login.html';
+                    }, 2000); // 2 segundos de espera
+                } catch (error) {
+                    // Mostrar mensaje de error
+                    document.getElementById('message').textContent = `Error: ${error.message}`;
+                    document.getElementById('message').style.color = 'red';
                 }
-
-                usuarios.push({
-                    id: contador.toString(), // Aquí se agrega el ID
-                    email,
-                    password,
-                    nombre,
-                    edad,
-                    genero,
-                    createdAt: new Date().toISOString()
-                });
-
-                localStorage.setItem('usuarios', JSON.stringify(usuarios));
-                window.location.href = 'login.html'; // ⬅️ Redirección añadida
             }
         });
     </script>
