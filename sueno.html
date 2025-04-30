@@ -281,10 +281,10 @@
         <ul>
             <li><a href="index.html">Inicio</a></li>
             <li><a href="registro.html">Registro</a></li>
-            <li><a href="humor.html">Estado de Ánimo</a></li>
-            <li><a href="sueno.html">Calidad del Sueño</a></li>
-            <li><a href="inicio.html">Dashboard</a></li>
-            <li><a href="reproductor.html">Sonidos Binaurales</a></li>
+            <li><a href="humor.html" class="problem-card-link">Estado de Ánimo</a></li>
+            <li><a href="sueno.html" class="problem-card-link">Calidad del Sueño</a></li>
+
+            <li><a href="reproductor.html"class="problem-card-link">Sonidos Binaurales</a></li>
         </ul>
     </nav>
     <div class="hamburger">
@@ -353,7 +353,7 @@
 
 <!-- Add your mouse image here -->
 <div class="animated-mouse">
-    <img src="mouse.png" alt="Mouse">
+    <img src="img/mouse.png" alt="Mouse">
 </div>
 
 <!-- Importar Firebase -->
@@ -443,8 +443,13 @@
             updateSlider();
         }
 
-        function endDrag() {
-            isDragging = false;
+        async function endDrag() {
+            if (isDragging) {
+                isDragging = false;
+                await saveSelection();
+                // Redirección con userId en la URL
+                window.location.href = `inicio.html?userId=${userId}`;
+            }
         }
 
         function updateSlider() {
@@ -514,19 +519,25 @@
             }
         }
 
-        // Add click functionality to each option
-        sliderOptions.forEach((option, index) => {
-            option.addEventListener('click', () => {
+           sliderOptions.forEach((option, index) => {
+            option.addEventListener('click', async () => {
                 currentPos = index;
                 updateSlider();
+                await saveSelection();
+                // Redirección con userId en la URL
+                window.location.href = `inicio.html?userId=${userId}`;
             });
         });
 
         // Also add click functionality to each icon
+
         sliderIcons.forEach((icon, index) => {
-            icon.addEventListener('click', () => {
+            icon.addEventListener('click', async () => {
                 currentPos = index;
                 updateSlider();
+                await saveSelection();
+                // Redirección con userId en la URL
+                window.location.href = `inicio.html?userId=${userId}`;
             });
         });
     });
