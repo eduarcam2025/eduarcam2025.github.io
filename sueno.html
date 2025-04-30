@@ -385,6 +385,16 @@
         // Redirigir a login.html si no hay ID de usuario
         window.location.href = 'login.html';
     }
+    document.addEventListener('DOMContentLoaded', () => {
+        const userId = params.get('userId') || localStorage.getItem('userId');
+        if (userId) {
+            document.querySelectorAll('.problem-card-link').forEach(link => {
+                const url = new URL(link.href, window.location.origin);
+                url.searchParams.set('userId', userId);
+                link.href = url.toString();
+            });
+        }
+    });
 
     document.addEventListener('DOMContentLoaded', function () {
         const sliderTrack = document.querySelector('.slider-track');
