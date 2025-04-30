@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insolfége-Calidad del Sueño</title>
+    <title>Insolfége-Estado de Animo</title>
     <style>
         :root {
             --color-dark: #190019;
@@ -300,7 +300,7 @@
 </div>
 
 <div class="container">
-    <h1 class="content-wrapper">¿Cómo calificarías la calidad de tu sueño?</h1>
+    <h1 class="content-wrapper">¿Cómo Te encuentras hoy?</h1>
     <div class="slider-container">
         <div class="slider-icons-container">
             <div class="slider-icon excellent">
@@ -329,23 +329,23 @@
         <div class="slider-labels-container">
             <div class="slider-option">
                 <div class="option-label">Excelente</div>
-                <div class="option-hours">7-9 HORAS</div>
+
             </div>
             <div class="slider-option">
-                <div class="option-label">Buena</div>
-                <div class="option-hours">6-7 HORAS</div>
+                <div class="option-label">Bien</div>
+
             </div>
             <div class="slider-option">
                 <div class="option-label">Regular</div>
-                <div class="option-hours">5 HORAS</div>
+
             </div>
             <div class="slider-option">
-                <div class="option-label">Mala</div>
-                <div class="option-hours">3-4 HORAS</div>
+                <div class="option-label">Mal</div>
+
             </div>
             <div class="slider-option">
-                <div class="option-label">Pésima</div>
-                <div class="option-hours">3 HORAS</div>
+                <div class="option-label">Muy mal</div>
+
             </div>
         </div>
     </div>
@@ -467,7 +467,7 @@
          async function saveSelectionToFirestore(selectedQuality) {
         try {
             const userDocRef = doc(db, "usuarios", userId);
-            const sleepHistoryCollection = collection(userDocRef, "sleepHistory");
+            const sleepHistoryCollection = collection(userDocRef, "humorHistory");
 
             await addDoc(sleepHistoryCollection, {
                 calidadSueno: selectedQuality,
