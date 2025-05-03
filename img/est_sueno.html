@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insolfége-Porcentaje del Sueño</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1E1E38;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 20% 30%, #2A2A50, #1E1E38);
+        }
+
+        .container {
+            background-color: #1E1E38;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-arrow {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-icon {
+            color: #ffcc00;
+            font-size: 20px;
+        }
+
+        .more-menu {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Time Section */
+        .time-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .time-display {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .time-info {
+            font-size: 12px;
+            color: #8a8a9c;
+        }
+
+        .moon-icon {
+            text-align: right;
+        }
+
+        .moon-icon i {
+            font-size: 40px;
+            color: #ffffff;
+        }
+
+        .moon-icon i.star {
+            color: #ffcc00;
+            font-size: 18px;
+            position: relative;
+            top: -10px;
+            left: -10px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background-color: #2A2A50;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .quality-section {
+            flex: 1;
+            min-width: 100px;
+            margin-right: 15px;
+        }
+
+        .quality-title {
+            color: #8a8a9c;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .quality-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+
+        .quality-circle-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(82, 104, 218, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quality-circle-fill {
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            border: 15px solid #5268DA;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            transform: rotate(45deg);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quality-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #5268DA;
+        }
+
+        .sleep-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .sleep-info-item {
+            background-color: #242440;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sleep-info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-title {
+            color: #8a8a9c;
+            font-size: 12px;
+        }
+
+        .info-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .wake-up {
+            background-color: #242440;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wake-up-text {
+            font-size: 14px;
+            color: #8a8a9c;
+        }
+
+        .wake-up-time {
+            font-size: 18px;
+            font-weight: bold;
+            color: #5268DA;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Statistic Section */
+        .statistic-section {
+            margin-bottom: 25px;
+        }
+
+        .statistic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .statistic-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .date-range {
+            color: #8a8a9c;
+            font-size: 12px;
+        }
+
+        .time-range {
+            background-color: #242440;
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: 12px;
+            color: #8a8a9c;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .bar-chart {
+            height: 150px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .bar {
+            width: 8px;
+            background-color: #5268DA;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: height 0.3s ease;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            color: #8a8a9c;
+        }
+
+        .bar-tooltip {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2A2A50;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 10px;
+            display: none;
+        }
+
+        .bar:focus .bar-tooltip {
+            display: block;
+        }
+
+        .bar:nth-child(3) {
+            background-color: #FF9F00;
+        }
+
+        .y-axis {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-right: 10px;
+            font-size: 10px;
+            color: #8a8a9c;
+        }
+
+        /* Alarm Section */
+        .alarm-section {
+            margin-top: 20px;
+        }
+
+        .alarm-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .alarm-container {
+            position: relative;
+        }
+
+        .timer-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5268DA, #2A2A50);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-circle::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .timer-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .alarm-times {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .alarm-time {
+            text-align: center;
+            width: 45%;
+        }
+
+        .time-label {
+            font-size: 12px;
+            color: #8a8a9c;
+            margin-bottom: 5px;
+        }
+
+        .time-value {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .time-type {
+            color: #8a8a9c;
+            font-size: 12px;
+        }
+
+        /* Custom font icons */
+        .icon {
+            font-style: normal;
+            display: inline-block;
+        }
+
+/* Menú de Navegación */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-dark);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: var(--color-bg);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    transition: transform 0.3s;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .menu {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        width: 250px;
+        height: calc(100vh - 60px);
+        background: var(--color-dark);
+        padding: 1rem;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+    }
+
+    .menu.active {
+        transform: translateX(0);
+    }
+
+    .menu ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+    </style>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">Insolfége</div>
+    <nav class="menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="registro.html">Registro</a></li>
+            <li><a href="humor.html" class="problem-card-link">Estado de Ánimo</a></li>
+            <li><a href="sueno.html" class="problem-card-link">Calidad del Sueño</a></li>
+
+            <li><a href="reproductor.html"class="problem-card-link">Sonidos Binaurales</a></li>
+        </ul>
+    </nav>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="back-arrow">&#8592;</div>
+            <div class="title">
+                <div class="title-icon">&#9788;</div>
+                <div>Porcentaje de Horas Dormidas</div>
+            </div>
+            <div class="more-menu">...</div>
+        </div>
+
+        <!-- Time Section -->
+        <div class="time-section">
+            <div>
+                <div class="time-display">04:00 AM</div>
+                <div class="time-info">Tracker ends 2h ago</div>
+            </div>
+            <div class="moon-icon">
+                &#9788;<i class="star">&#9733;</i>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="quality-section">
+                <div class="quality-title">Calidad del Sueño</div>
+                <div class="quality-circle">
+                    <div class="quality-circle-bg">
+                        <div class="quality-circle-fill">
+                            <div class="quality-number">80</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sleep-info">
+                <div class="sleep-info-item">
+                    <div>
+                        <div class="info-title">Total Horas Dormidas</div>
+                    </div>
+                    <div class="info-value">8h 12m</div>
+                </div>
+
+                <div class="sleep-info-item">
+                    <div>
+                        <div class="info-title">Nivel de Ruido</div>
+                    </div>
+                    <div class="info-value">58 dB</div>
+                </div>
+
+                <div class="wake-up">
+                    <div class="wake-up-text">Hora de Levantarse</div>
+                    <div class="wake-up-time">&#9728; 05:12</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistic Section -->
+        <div class="statistic-section">
+            <div class="statistic-header">
+                <div>
+                    <div class="statistic-title">Estadística</div>
+                    <div class="date-range">Mayo 04 - Mayo 10</div>
+                </div>
+                <div class="time-range">
+                    7 Días &#9660;
+                </div>
+            </div>
+
+            <div class="bar-chart-container">
+                <div class="bar-chart">
+                    <div class="y-axis">
+                        <span>100</span>
+                        <span>80</span>
+                        <span>60</span>
+                        <span>40</span>
+                        <span>20</span>
+                    </div>
+                    <div class="bar" style="height: 40%;">
+                        <div class="bar-tooltip">50</div>
+                        <div class="bar-label">10</div>
+                    </div>
+                    <div class="bar" style="height: 60%;">
+                        <div class="bar-tooltip">65</div>
+                        <div class="bar-label">11</div>
+                    </div>
+                    <div class="bar" style="height: 80%;">
+                        <div class="bar-tooltip">80</div>
+                        <div class="bar-label">12</div>
+                    </div>
+                    <div class="bar" style="height: 50%;">
+                        <div class="bar-tooltip">55</div>
+                        <div class="bar-label">13</div>
+                    </div>
+                    <div class="bar" style="height: 65%;">
+                        <div class="bar-tooltip">70</div>
+                        <div class="bar-label">14</div>
+                    </div>
+                    <div class="bar" style="height: 70%;">
+                        <div class="bar-tooltip">75</div>
+                        <div class="bar-label">15</div>
+                    </div>
+                    <div class="bar" style="height: 45%;">
+                        <div class="bar-tooltip">48</div>
+                        <div class="bar-label">16</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alarm Section -->
+
+    </div>
+    <script type="module">
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {  getFirestore, doc, collection, addDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCyU6h56zzEtuJRr4JbNITCel9Z_K5HYQI",
+        authDomain: "registreruser-42ae0.firebaseapp.com",
+        projectId: "registreruser-42ae0",
+        storageBucket: "registreruser-42ae0.firebasestorage.app",
+        messagingSenderId: "676582374312",
+        appId: "1:676582374312:web:9c3545678ecbc801a2bb9d"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Verificar si el usuario tiene un ID válido
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get('userId') || localStorage.getItem('userId');
+
+    if (!userId) {
+        // Redirigir a login.html si no hay ID de usuario
+        window.location.href = 'login.html';
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const userId = params.get('userId') || localStorage.getItem('userId');
+        if (userId) {
+            document.querySelectorAll('.problem-card-link').forEach(link => {
+                const url = new URL(link.href, window.location.origin);
+                url.searchParams.set('userId', userId);
+                link.href = url.toString();
+            });
+        }
+    });
+</script>
+
+    <script>
+        // Add some interactivity for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the sleep quality circle
+            const qualityCircleFill = document.querySelector('.quality-circle-fill');
+            const qualityNumber = document.querySelector('.quality-number');
+
+            // Simple animation to show the progress
+            let progress = 0;
+            const targetProgress = 80;
+
+            const interval = setInterval(() => {
+                progress += 1;
+                const degrees = (progress / targetProgress) * 360;
+                if (progress >= targetProgress) {
+                    clearInterval(interval);
+                }
+
+                qualityCircleFill.style.transform = `rotate(${degrees}deg)`;
+                qualityNumber.textContent = progress;
+            }, 20);
+
+            // Bar chart hover effect
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                bar.addEventListener('mouseenter', function() {
+                    this.querySelector('.bar-tooltip').style.display = 'block';
+                });
+
+                bar.addEventListener('mouseleave', function() {
+                    this.querySelector('.bar-tooltip').style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
